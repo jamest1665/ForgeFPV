@@ -1,0 +1,1 @@
+Full content of the Godot README just written

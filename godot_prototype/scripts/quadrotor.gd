@@ -1,0 +1,1 @@
+Full GDScript port of the quadrotor class from the file just created
