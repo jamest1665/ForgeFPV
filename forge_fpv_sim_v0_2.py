@@ -1,0 +1,1 @@
+Full v0.2 code from earlier write_file
