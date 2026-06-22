@@ -1,1 +1,1 @@
-Full updated production HUD with real drawing from latest write_file
+Full updated production HUD with improved horizon drawing
