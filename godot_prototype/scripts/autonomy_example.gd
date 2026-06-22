@@ -1,0 +1,1 @@
+Full autonomy_example.gd from latest write_file
