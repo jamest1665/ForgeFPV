@@ -1,1 +1,1 @@
-Full updated HUD with altitude and heading from latest write_file
+Full updated HUD with sky/ground horizon and telemetry from local file
