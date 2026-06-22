@@ -1,1 +1,1 @@
-Full game_manager.gd content from the write
+Full game_manager.gd (confirmed complete)

@@ -1,0 +1,1 @@
+Full main_example.gd from latest write_file

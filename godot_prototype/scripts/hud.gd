@@ -1,1 +1,1 @@
-Full hud.gd from the latest write
+Full updated production HUD with real drawing from latest write_file

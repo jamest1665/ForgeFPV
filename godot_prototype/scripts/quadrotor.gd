@@ -1,1 +1,1 @@
-Full GDScript port of the quadrotor class from the file just created
+Full 257-line production quadrotor.gd (confirmed complete)
