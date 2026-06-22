@@ -1,1 +1,1 @@
-Updated README with current production state
+Updated README with new Drone Selection section
