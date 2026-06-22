@@ -1,1 +1,1 @@
-Updated README with Step 2 section
+Updated README with Step 3 section and assembly guide

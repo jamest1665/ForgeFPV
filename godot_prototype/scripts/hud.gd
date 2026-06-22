@@ -1,0 +1,1 @@
+Full hud.gd from the latest write
