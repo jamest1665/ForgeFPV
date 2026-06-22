@@ -1,1 +1,1 @@
-Full content of the Godot README just written
+Updated README with Step 2 section

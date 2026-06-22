@@ -1,0 +1,1 @@
+Full game_manager.gd content from the write
