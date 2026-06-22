@@ -1,1 +1,1 @@
-Cleaned and updated README from latest edit
+Updated README with pause menu section
