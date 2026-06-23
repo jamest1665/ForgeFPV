@@ -1,1 +1,1 @@
-Updated DroneSelection.gd to apply config on selection
+Updated DroneSelection.gd with GameState integration
