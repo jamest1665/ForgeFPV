@@ -1,0 +1,1 @@
+Full Mission.gd data class

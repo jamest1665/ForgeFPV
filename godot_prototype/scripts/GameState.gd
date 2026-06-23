@@ -1,1 +1,1 @@
-Full GameState.gd Autoload
+Updated GameState.gd with current_mission
