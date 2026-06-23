@@ -1,1 +1,1 @@
-Updated DroneSelection.gd with GameState integration
+Full final DroneSelection.gd with GameState integration

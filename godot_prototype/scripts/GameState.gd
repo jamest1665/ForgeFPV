@@ -1,1 +1,1 @@
-Updated GameState.gd with current_mission
+Full final GameState.gd with selected_drone_config and current_mission
