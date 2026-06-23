@@ -1,1 +1,1 @@
-Updated main_example.gd to apply drone config on ready
+Full final main_example.gd with drone config application

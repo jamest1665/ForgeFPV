@@ -1,1 +1,1 @@
-Updated fpv_camera.gd with dynamic FOV from selected drone config
+Full final fpv_camera.gd with dynamic FOV from selected drone

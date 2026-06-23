@@ -1,1 +1,1 @@
-Updated quadrotor.gd with apply_drone_config()
+Full final quadrotor.gd with apply_drone_config() and all physics
