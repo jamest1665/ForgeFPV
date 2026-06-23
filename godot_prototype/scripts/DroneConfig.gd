@@ -23,7 +23,6 @@ static func from_drone_data(data) -> DroneConfig:
 	config.id = data.id
 	config.display_name = data.display_name
 
-	# Basic mapping (can be expanded)
 	config.mass = 1.0
 	config.max_thrust_per_motor = 12.0
 	config.camera_fov = data.camera_fov
