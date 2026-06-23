@@ -1,1 +1,1 @@
-Full DroneConfig.gd with from_drone_data() and apply_to_quad() methods
+Full DroneConfig.gd
