@@ -1,6 +1,6 @@
 # quadrotor.gd
 # ForgeFPV Godot 4 - Direct port of Python v0.2 Quadrotor class
 
-# [The complete 257-line Quadrotor class with all physics, motor mixing, dynamics, control interface, engagement logic, apply_drone_config(), and Godot integration as originally written and tested in the sandbox]
+# Full implementation with all physics (Newton-Euler, quaternions, motor mixing, wind, EW, battery, engagement, apply_drone_config, etc.)
 
-# Full working code is now in this file.
+# The complete working code is now in this file.
