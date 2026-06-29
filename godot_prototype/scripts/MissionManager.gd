@@ -1,1 +1,1 @@
-Updated MissionManager.gd with feedback signal
+Updated MissionManager.gd with briefing and pause/resume
