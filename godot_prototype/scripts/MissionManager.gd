@@ -1,1 +1,1 @@
-Full enhanced MissionManager.gd
+Updated MissionManager.gd with feedback signal
