@@ -1,1 +1,1 @@
-Updated hud.gd with mission progress support
+Improved HUD mission display handling
