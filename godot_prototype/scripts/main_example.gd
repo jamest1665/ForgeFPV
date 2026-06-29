@@ -1,1 +1,1 @@
-Updated main_example.gd with MissionDatabase integration
+Updated main_example.gd with MissionDatabase auto-start
