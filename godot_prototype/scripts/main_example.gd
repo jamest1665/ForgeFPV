@@ -1,1 +1,1 @@
-Updated main_example.gd with improved drone config application and mission startup logic
+Updated main_example.gd with MissionManager setup
