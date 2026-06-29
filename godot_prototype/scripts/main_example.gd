@@ -1,1 +1,1 @@
-Updated main_example.gd with MissionDatabase auto-start
+Updated main_example.gd with mission completion handling

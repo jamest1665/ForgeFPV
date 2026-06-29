@@ -1,1 +1,1 @@
-Updated MissionManager.gd with briefing and pause/resume
+Added full_reset() to MissionManager
