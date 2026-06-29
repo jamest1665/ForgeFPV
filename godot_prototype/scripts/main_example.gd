@@ -1,1 +1,1 @@
-Updated main_example.gd with mission completion handling and state reset
+Updated main_example.gd with improved mission complete flow
