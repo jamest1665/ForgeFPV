@@ -1,1 +1,1 @@
-Updated quadrotor.gd with drone-specific wind response
+Minor polish to wind integration code
