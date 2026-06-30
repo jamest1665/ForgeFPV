@@ -1,1 +1,1 @@
-Updated quadrotor.gd with drone-specific control feel
+Updated quadrotor.gd with drone-specific wind response
