@@ -1,1 +1,1 @@
-Full DonbasTestScene.gd
+Polished DonbasTestScene.gd startup messages
