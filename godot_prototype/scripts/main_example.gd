@@ -1,1 +1,1 @@
-Updated main_example.gd with mission complete flow and return to menu logic
+Updated main_example.gd with WeatherSystem integration
