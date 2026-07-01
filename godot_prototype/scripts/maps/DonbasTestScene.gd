@@ -1,1 +1,1 @@
-Updated DonbasTestScene.gd with reset functionality
+Final state of DonbasTestScene.gd
