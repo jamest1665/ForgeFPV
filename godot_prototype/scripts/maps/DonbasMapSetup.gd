@@ -1,1 +1,1 @@
-Updated DonbasMapSetup.gd with more map features
+Updated DonbasMapSetup.gd with more training objectives
