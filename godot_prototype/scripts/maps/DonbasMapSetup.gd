@@ -1,1 +1,1 @@
-Updated DonbasMapSetup.gd with more training objectives
+Updated DonbasMapSetup.gd with objective grouping
