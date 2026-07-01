@@ -1,1 +1,1 @@
-Updated hud.gd with full mission description on start
+Updated hud.gd with objective feedback method
