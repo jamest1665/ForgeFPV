@@ -1,1 +1,1 @@
-Final polish to DonbasTestScene.gd
+Updated DonbasTestScene.gd with reset functionality
