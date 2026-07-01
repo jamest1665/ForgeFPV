@@ -1,1 +1,1 @@
-Full DonbasMapSetup.gd
+Updated DonbasMapSetup.gd with more map features
