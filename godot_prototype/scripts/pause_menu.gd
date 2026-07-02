@@ -1,1 +1,1 @@
-Updated pause_menu.gd with mission pause/resume
+Updated pause_menu.gd with better reset flow
