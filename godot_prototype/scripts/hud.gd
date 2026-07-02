@@ -1,1 +1,1 @@
-Updated hud.gd with objective feedback method
+Updated hud.gd with wind indicator
