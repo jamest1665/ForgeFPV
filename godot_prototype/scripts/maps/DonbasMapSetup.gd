@@ -1,1 +1,1 @@
-Updated DonbasMapSetup.gd with buildings
+Updated DonbasMapSetup.gd with building collision
