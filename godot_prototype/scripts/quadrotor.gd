@@ -1,1 +1,1 @@
-Updated quadrotor.gd with low-altitude placeholder
+Updated quadrotor.gd with low-altitude effect
