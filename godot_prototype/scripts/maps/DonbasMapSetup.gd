@@ -1,1 +1,1 @@
-Updated DonbasMapSetup.gd with objective grouping
+Updated DonbasMapSetup.gd with better visuals
