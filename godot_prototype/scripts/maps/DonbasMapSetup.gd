@@ -1,1 +1,1 @@
-Updated DonbasMapSetup.gd with better visuals
+Updated DonbasMapSetup.gd with buildings
