@@ -1,1 +1,1 @@
-Updated DonbasTestScene.gd with MissionComplete integration
+Updated DonbasTestScene.gd with briefing integration
