@@ -1,1 +1,1 @@
-Updated DonbasMapSetup.gd with building collision
+Updated DonbasMapSetup.gd with ground variation
