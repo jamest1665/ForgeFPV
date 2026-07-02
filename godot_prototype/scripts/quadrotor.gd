@@ -1,1 +1,1 @@
-Minor polish to wind integration code
+Updated quadrotor.gd with low-altitude placeholder
