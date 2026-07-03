@@ -1,1 +1,1 @@
-Updated hud.gd with wind indicator
+Updated hud.gd with objective progress tracker
