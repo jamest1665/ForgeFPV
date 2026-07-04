@@ -1,1 +1,1 @@
-Updated MainMenu.gd with high score display
+Updated MainMenu.gd with automatic high score label creation
