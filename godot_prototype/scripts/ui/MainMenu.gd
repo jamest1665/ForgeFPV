@@ -1,1 +1,1 @@
-Full MainMenu.gd
+Updated MainMenu.gd with high score display
