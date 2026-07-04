@@ -1,1 +1,1 @@
-Updated MainMenu.gd with automatic high score label creation
+Updated MainMenu.gd with instructions button support
