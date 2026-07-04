@@ -1,1 +1,1 @@
-Updated InstructionsPanel.gd with default instructions text
+Updated InstructionsPanel.gd with ESC key support
