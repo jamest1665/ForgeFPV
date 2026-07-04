@@ -1,1 +1,1 @@
-Updated MainMenu.gd with instructions button support
+Updated MainMenu.gd with automatic version label
