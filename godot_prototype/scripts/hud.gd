@@ -1,1 +1,1 @@
-Updated hud.gd with objective progress tracker
+Updated hud.gd with score display

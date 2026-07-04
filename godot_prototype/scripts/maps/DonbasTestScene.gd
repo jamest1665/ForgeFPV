@@ -1,1 +1,1 @@
-Updated DonbasTestScene.gd with briefing integration
+Updated DonbasTestScene.gd to use ScoringSystem
