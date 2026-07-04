@@ -1,1 +1,1 @@
-Updated MainMenu.gd with first-launch instructions logic
+Updated MainMenu.gd with better label positioning
