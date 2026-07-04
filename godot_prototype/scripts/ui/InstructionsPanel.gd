@@ -1,1 +1,1 @@
-Full InstructionsPanel.gd
+Updated InstructionsPanel.gd with default instructions text
