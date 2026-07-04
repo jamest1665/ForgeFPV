@@ -1,1 +1,1 @@
-Updated MainMenu.gd with automatic version label
+Updated MainMenu.gd with first-launch instructions logic
