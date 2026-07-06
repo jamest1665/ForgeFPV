@@ -1,1 +1,1 @@
-Updated MainMenu.gd with better label positioning
+Updated MainMenu.gd with dynamic UI creation
