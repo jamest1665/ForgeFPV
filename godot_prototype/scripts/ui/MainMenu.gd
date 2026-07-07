@@ -1,1 +1,1 @@
-Updated MainMenu.gd with dynamic UI creation
+Updated MainMenu.gd with title label
