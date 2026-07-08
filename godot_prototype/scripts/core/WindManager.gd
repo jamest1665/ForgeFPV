@@ -1,0 +1,1 @@
+Updated WindManager.gd with Area3D meta support
