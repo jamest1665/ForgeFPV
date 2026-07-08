@@ -1,1 +1,1 @@
-Updated UrbanTestScene.gd
+Updated UrbanTestScene.gd with inline mission fallback
