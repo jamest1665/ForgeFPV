@@ -1,1 +1,1 @@
-Updated UrbanMapSetup.gd with solid urban foundation
+Updated UrbanMapSetup.gd with higher density
