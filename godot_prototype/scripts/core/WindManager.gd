@@ -1,1 +1,1 @@
-Updated WindManager.gd with Area3D meta support
+Updated WindManager with stronger urban wind application
