@@ -1,1 +1,1 @@
-Updated quadrotor.gd with low-altitude effect
+Updated quadrotor.gd with TangentOrbit mode
