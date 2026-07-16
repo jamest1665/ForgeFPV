@@ -1,1 +1,1 @@
-Full HivemindSwarm
+Updated with lightweight spawn support
