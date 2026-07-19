@@ -1,1 +1,1 @@
-Full production HivemindSwarm with MultiMesh
+Full smarter HivemindSwarm

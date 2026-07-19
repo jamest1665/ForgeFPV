@@ -1,1 +1,1 @@
-Full production AudioManager
+Improved AudioManager with real-file instructions

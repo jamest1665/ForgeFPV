@@ -1,1 +1,1 @@
-Full production DroneVisual
+Higher-detail DroneVisual
