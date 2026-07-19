@@ -1,1 +1,1 @@
-Updated with lightweight spawn support
+Full production HivemindSwarm with MultiMesh
