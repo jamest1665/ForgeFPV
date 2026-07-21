@@ -1,1 +1,1 @@
-Full production DonbasTestScene
+Full DonbasTestScene with player
