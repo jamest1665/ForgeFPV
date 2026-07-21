@@ -1,1 +1,1 @@
-Updated main_example.gd with WeatherSystem integration
+Legacy stub

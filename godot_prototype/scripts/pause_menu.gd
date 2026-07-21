@@ -1,1 +1,1 @@
-Updated pause_menu.gd with better reset flow
+Legacy redirect
