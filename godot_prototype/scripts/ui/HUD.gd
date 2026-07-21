@@ -1,1 +1,1 @@
-Full production HUD with mission complete and high score
+Phase B flight HUD
