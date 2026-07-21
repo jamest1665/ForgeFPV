@@ -1,1 +1,1 @@
-Full ScoringSystem.gd
+Full production ScoringSystem
