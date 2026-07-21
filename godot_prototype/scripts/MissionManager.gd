@@ -1,1 +1,1 @@
-Added full_reset() to MissionManager
+Full production MissionManager
