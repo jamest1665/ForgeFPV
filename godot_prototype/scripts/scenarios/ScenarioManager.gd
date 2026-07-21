@@ -1,1 +1,1 @@
-Full production ScenarioManager
+Improved ScenarioManager
