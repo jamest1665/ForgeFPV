@@ -1,1 +1,1 @@
-Full SwarmVisuals
+Updated SwarmVisuals with better materials

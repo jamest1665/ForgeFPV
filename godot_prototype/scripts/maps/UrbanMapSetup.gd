@@ -1,1 +1,1 @@
-Updated UrbanMapSetup.gd with data loading support
+Updated UrbanMapSetup with visual polish
