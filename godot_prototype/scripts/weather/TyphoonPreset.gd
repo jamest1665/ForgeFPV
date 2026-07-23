@@ -1,0 +1,1 @@
+Typhoon weather preset
