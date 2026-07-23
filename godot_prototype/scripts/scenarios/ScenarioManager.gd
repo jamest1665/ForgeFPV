@@ -1,1 +1,1 @@
-Improved ScenarioManager
+Better formation quality
