@@ -1,1 +1,1 @@
-Taiwan littoral map
+Full production TaiwanMapSetup

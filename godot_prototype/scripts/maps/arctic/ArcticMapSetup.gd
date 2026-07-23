@@ -1,1 +1,1 @@
-Arctic scaffold
+Full production ArcticMapSetup
