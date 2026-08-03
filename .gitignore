@@ -40,6 +40,7 @@ Thumbs.db
 forge_fpv_log.csv
 *.log
 
-# Godot (when added)
+# Godot
 .godot/
-export_presets.cfg
+# export_presets.cfg kept in repo for easy exports
+builds/
