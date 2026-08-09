@@ -2,9 +2,6 @@ extends Control
 
 func _ready():
 	print("MainMenu ready")
-	$StartDonbas.pressed.connect(_on_donbas)
-	$StartUrban.pressed.connect(_on_urban)
-	$QuitButton.pressed.connect(_on_quit)
 
 func _on_donbas():
 	print("Loading Donbas")
