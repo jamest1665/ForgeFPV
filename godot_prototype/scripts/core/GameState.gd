@@ -36,11 +36,11 @@ func get_score() -> int:
 	return score
 
 func complete_objective() -> void:
-	objatives_completed += 1
+	objectives_completed += 1
 
 func reset_run() -> void:
 	score = 0
-	objatives_completed = 0
+	objectives_completed = 0
 	current_mission_id = ""
 
 func get_run_summary() -> Dictionary:
