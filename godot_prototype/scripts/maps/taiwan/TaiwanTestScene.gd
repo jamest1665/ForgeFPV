@@ -1,6 +1,6 @@
 extends Node3D
 
-var pos = Vector3(0, 8, 0)
+var pos = Vector3(0, 20, 0)
 var vel = Vector3.ZERO
 var yaw = 0.0
 var pitch = 0.0
@@ -13,45 +13,53 @@ var hud: Label
 var targets = []
 var hit_ids = {}
 
-const MAX_SPEED = 38.0
-const ACCEL = 48.0
-const DRAG = 2.2
-const TURN = 2.3
+const MAX_SPEED = 48.0
+const ACCEL = 58.0
+const DRAG = 1.7
+const TURN = 2.5
 
 func _ready():
 	_build_world()
 	_build_player()
 	_build_targets()
 	_build_hud()
-	print("Aquatic Flood training ready")
+	print("Taiwan Littoral training ready")
 
 func _build_world():
-	var water = MeshInstance3D.new()
+	var ground = MeshInstance3D.new()
 	var plane = PlaneMesh.new()
-	plane.size = Vector2(400, 400)
-	water.mesh = plane
+	plane.size = Vector2(450, 450)
+	ground.mesh = plane
 	var mat = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.12, 0.28, 0.42)
-	mat.roughness = 0.15
-	water.material_override = mat
-	water.position.y = 0.0
+	mat.albedo_color = Color(0.3, 0.38, 0.28)
+	ground.material_override = mat
+	add_child(ground)
+	var water = MeshInstance3D.new()
+	var wp = PlaneMesh.new()
+	wp.size = Vector2(200, 450)
+	water.mesh = wp
+	var wm = StandardMaterial3D.new()
+	wm.albedo_color = Color(0.1, 0.25, 0.4)
+	water.material_override = wm
+	water.position = Vector3(200, -0.2, 0)
 	add_child(water)
 	var light = DirectionalLight3D.new()
-	light.light_energy = 1.2
-	light.rotation_degrees = Vector3(-50, 40, 0)
+	light.light_energy = 1.35
+	light.rotation_degrees = Vector3(-52, 15, 0)
 	add_child(light)
 	var rng = RandomNumberGenerator.new()
-	rng.seed = 11
-	for i in range(12):
-		var debris = MeshInstance3D.new()
+	rng.seed = 66
+	for i in range(20):
+		var b = MeshInstance3D.new()
 		var box = BoxMesh.new()
-		box.size = Vector3(rng.randf_range(2, 6), rng.randf_range(1, 3), rng.randf_range(2, 6))
-		debris.mesh = box
-		var dm = StandardMaterial3D.new()
-		dm.albedo_color = Color(0.35, 0.3, 0.22)
-		debris.material_override = dm
-		debris.position = Vector3(rng.randf_range(-150, 150), 1.0, rng.randf_range(-150, 150))
-		add_child(debris)
+		var h = rng.randf_range(4.0, 18.0)
+		box.size = Vector3(rng.randf_range(4, 10), h, rng.randf_range(4, 10))
+		b.mesh = box
+		var bm = StandardMaterial3D.new()
+		bm.albedo_color = Color(0.4, 0.38, 0.35)
+		b.material_override = bm
+		b.position = Vector3(rng.randf_range(-100, 80), h * 0.5, rng.randf_range(-150, 150))
+		add_child(b)
 
 func _build_player():
 	player = Node3D.new()
@@ -61,7 +69,7 @@ func _build_player():
 	box.size = Vector3(0.55, 0.12, 0.55)
 	body.mesh = box
 	var mat = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.2, 0.55, 0.95)
+	mat.albedo_color = Color(0.9, 0.75, 0.15)
 	body.material_override = mat
 	player.add_child(body)
 	var cam = Camera3D.new()
@@ -72,11 +80,11 @@ func _build_player():
 	add_child(player)
 
 func _build_targets():
-	var spots = [Vector3(30, 2, -20), Vector3(-40, 2, 25), Vector3(55, 2, 45), Vector3(-25, 2, -55), Vector3(70, 2, -10), Vector3(-60, 2, 5)]
+	var spots = [Vector3(40, 2, -30), Vector3(-30, 2, 40), Vector3(60, 2, 20), Vector3(-50, 2, -40), Vector3(20, 2, 80), Vector3(90, 2, -50), Vector3(-70, 2, 10)]
 	for i in range(spots.size()):
 		var t = MeshInstance3D.new()
 		var box = BoxMesh.new()
-		box.size = Vector3(2.2, 2.0, 2.2)
+		box.size = Vector3(2.3, 2.0, 2.3)
 		t.mesh = box
 		var mat = StandardMaterial3D.new()
 		mat.albedo_color = Color(0.9, 0.2, 0.1)
@@ -97,7 +105,7 @@ func _build_hud():
 	layer.add_child(hud)
 	var help = Label.new()
 	help.position = Vector2(16, 680)
-	help.text = "Aquatic Flood · WASD Q/E Space/Ctrl · ESC menu · Hit red targets"
+	help.text = "Taiwan Littoral · coastal + inland · WASD Q/E Space/Ctrl · ESC menu"
 	layer.add_child(help)
 
 func _process(delta):
@@ -129,10 +137,10 @@ func _fly(delta):
 	vel *= (1.0 - DRAG * delta)
 	if vel.length() > MAX_SPEED: vel = vel.normalized() * MAX_SPEED
 	pos += vel * delta
-	if pos.y < 1.5:
-		pos.y = 1.5
+	if pos.y < 1.0:
+		pos.y = 1.0
 		vel.y = maxf(vel.y, 0.0)
-		vel *= 0.75
+		vel *= 0.7
 	battery = maxf(0.0, battery - throttle * 3.5 * delta)
 	if battery <= 0.0: throttle = 0.0
 	player.position = pos
@@ -149,4 +157,4 @@ func _check_targets():
 			t.visible = false
 
 func _update_hud():
-	hud.text = "AQUATIC  SPD %3.0f  ALT %3.0f  BAT %3.0f%%  SCORE %d  TGT %d/%d" % [vel.length(), pos.y, battery, score, hit_ids.size(), targets.size()]
+	hud.text = "TAIWAN  SPD %3.0f  ALT %3.0f  BAT %3.0f%%  SCORE %d  TGT %d/%d" % [vel.length(), pos.y, battery, score, hit_ids.size(), targets.size()]

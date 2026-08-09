@@ -1,6 +1,6 @@
 extends Node3D
 
-var pos = Vector3(0, 8, 0)
+var pos = Vector3(0, 16, 0)
 var vel = Vector3.ZERO
 var yaw = 0.0
 var pitch = 0.0
@@ -13,45 +13,49 @@ var hud: Label
 var targets = []
 var hit_ids = {}
 
-const MAX_SPEED = 38.0
-const ACCEL = 48.0
-const DRAG = 2.2
-const TURN = 2.3
+const MAX_SPEED = 40.0
+const ACCEL = 50.0
+const DRAG = 2.1
+const TURN = 2.5
 
 func _ready():
 	_build_world()
 	_build_player()
 	_build_targets()
 	_build_hud()
-	print("Aquatic Flood training ready")
+	print("LA Megaport training ready")
 
 func _build_world():
-	var water = MeshInstance3D.new()
+	var ground = MeshInstance3D.new()
 	var plane = PlaneMesh.new()
 	plane.size = Vector2(400, 400)
-	water.mesh = plane
+	ground.mesh = plane
 	var mat = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.12, 0.28, 0.42)
-	mat.roughness = 0.15
-	water.material_override = mat
-	water.position.y = 0.0
-	add_child(water)
+	mat.albedo_color = Color(0.25, 0.25, 0.28)
+	ground.material_override = mat
+	add_child(ground)
 	var light = DirectionalLight3D.new()
-	light.light_energy = 1.2
-	light.rotation_degrees = Vector3(-50, 40, 0)
+	light.light_energy = 1.3
+	light.rotation_degrees = Vector3(-48, 35, 0)
 	add_child(light)
 	var rng = RandomNumberGenerator.new()
-	rng.seed = 11
-	for i in range(12):
-		var debris = MeshInstance3D.new()
+	rng.seed = 55
+	# container stacks / warehouses
+	for i in range(28):
+		var b = MeshInstance3D.new()
 		var box = BoxMesh.new()
-		box.size = Vector3(rng.randf_range(2, 6), rng.randf_range(1, 3), rng.randf_range(2, 6))
-		debris.mesh = box
-		var dm = StandardMaterial3D.new()
-		dm.albedo_color = Color(0.35, 0.3, 0.22)
-		debris.material_override = dm
-		debris.position = Vector3(rng.randf_range(-150, 150), 1.0, rng.randf_range(-150, 150))
-		add_child(debris)
+		var h = rng.randf_range(6.0, 22.0)
+		box.size = Vector3(rng.randf_range(6, 14), h, rng.randf_range(4, 10))
+		b.mesh = box
+		var bm = StandardMaterial3D.new()
+		bm.albedo_color = Color(rng.randf_range(0.2, 0.5), rng.randf_range(0.25, 0.45), rng.randf_range(0.3, 0.55))
+		b.material_override = bm
+		var x = rng.randf_range(-140, 140)
+		var z = rng.randf_range(-140, 140)
+		if Vector2(x, z).length() < 20:
+			x += 30
+		b.position = Vector3(x, h * 0.5, z)
+		add_child(b)
 
 func _build_player():
 	player = Node3D.new()
@@ -61,7 +65,7 @@ func _build_player():
 	box.size = Vector3(0.55, 0.12, 0.55)
 	body.mesh = box
 	var mat = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.2, 0.55, 0.95)
+	mat.albedo_color = Color(0.2, 0.7, 0.9)
 	body.material_override = mat
 	player.add_child(body)
 	var cam = Camera3D.new()
@@ -72,7 +76,7 @@ func _build_player():
 	add_child(player)
 
 func _build_targets():
-	var spots = [Vector3(30, 2, -20), Vector3(-40, 2, 25), Vector3(55, 2, 45), Vector3(-25, 2, -55), Vector3(70, 2, -10), Vector3(-60, 2, 5)]
+	var spots = [Vector3(30, 2, -25), Vector3(-40, 2, 35), Vector3(65, 2, 40), Vector3(-55, 2, -45), Vector3(20, 2, 75), Vector3(-70, 2, 10), Vector3(85, 2, -30), Vector3(-20, 2, -80)]
 	for i in range(spots.size()):
 		var t = MeshInstance3D.new()
 		var box = BoxMesh.new()
@@ -97,7 +101,7 @@ func _build_hud():
 	layer.add_child(hud)
 	var help = Label.new()
 	help.position = Vector2(16, 680)
-	help.text = "Aquatic Flood · WASD Q/E Space/Ctrl · ESC menu · Hit red targets"
+	help.text = "LA Megaport · container yards · WASD Q/E Space/Ctrl · ESC menu"
 	layer.add_child(help)
 
 func _process(delta):
@@ -129,10 +133,10 @@ func _fly(delta):
 	vel *= (1.0 - DRAG * delta)
 	if vel.length() > MAX_SPEED: vel = vel.normalized() * MAX_SPEED
 	pos += vel * delta
-	if pos.y < 1.5:
-		pos.y = 1.5
+	if pos.y < 1.0:
+		pos.y = 1.0
 		vel.y = maxf(vel.y, 0.0)
-		vel *= 0.75
+		vel *= 0.7
 	battery = maxf(0.0, battery - throttle * 3.5 * delta)
 	if battery <= 0.0: throttle = 0.0
 	player.position = pos
@@ -149,4 +153,4 @@ func _check_targets():
 			t.visible = false
 
 func _update_hud():
-	hud.text = "AQUATIC  SPD %3.0f  ALT %3.0f  BAT %3.0f%%  SCORE %d  TGT %d/%d" % [vel.length(), pos.y, battery, score, hit_ids.size(), targets.size()]
+	hud.text = "LA PORT  SPD %3.0f  ALT %3.0f  BAT %3.0f%%  SCORE %d  TGT %d/%d" % [vel.length(), pos.y, battery, score, hit_ids.size(), targets.size()]
