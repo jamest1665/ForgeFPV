@@ -23,51 +23,83 @@ color = Color(0.05, 0.06, 0.09, 1)
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
-offset_left = 140.0
-offset_top = 60.0
-offset_right = 1140.0
-offset_bottom = 120.0
-theme_override_font_sizes/font_size = 32
+offset_left = 100.0
+offset_top = 30.0
+offset_right = 1180.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 28
 text = "ForgeFPV - American Tactical Trainer"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="."]
-layout_mode = 0
-offset_left = 140.0
-offset_top = 120.0
-offset_right = 1140.0
-offset_bottom = 160.0
-theme_override_font_sizes/font_size = 16
-text = "Rate-mode FPV practice · Find targets · Score hits"
-horizontal_alignment = 1
-
-[node name="StartDonbas" type="Button" parent="."]
+[node name="BtnDonbas" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 260.0
+offset_top = 120.0
 offset_right = 840.0
-offset_bottom = 320.0
-theme_override_font_sizes/font_size = 20
-text = "Donbas Field Training"
+offset_bottom = 165.0
+text = "1  Donbas Field"
 
-[node name="StartUrban" type="Button" parent="."]
+[node name="BtnUrban" type="Button" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 175.0
+offset_right = 840.0
+offset_bottom = 220.0
+text = "2  Urban Canyon"
+
+[node name="BtnAquatic" type="Button" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 230.0
+offset_right = 840.0
+offset_bottom = 275.0
+text = "3  Aquatic Flood"
+
+[node name="BtnTaiwan" type="Button" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 285.0
+offset_right = 840.0
+offset_bottom = 330.0
+text = "4  Taiwan Littoral"
+
+[node name="BtnArctic" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
 offset_top = 340.0
 offset_right = 840.0
-offset_bottom = 400.0
-theme_override_font_sizes/font_size = 20
-text = "Urban Canyon Training"
+offset_bottom = 385.0
+text = "5  Arctic High North"
+
+[node name="BtnBorder" type="Button" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 395.0
+offset_right = 840.0
+offset_bottom = 440.0
+text = "6  Southern Border"
+
+[node name="BtnLAPort" type="Button" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 450.0
+offset_right = 840.0
+offset_bottom = 495.0
+text = "7  LA Megaport"
 
 [node name="QuitButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 420.0
+offset_top = 520.0
 offset_right = 840.0
-offset_bottom = 480.0
-theme_override_font_sizes/font_size = 20
+offset_bottom = 565.0
 text = "Quit"
 
-[connection signal="pressed" from="StartDonbas" to="." method="_on_donbas"]
-[connection signal="pressed" from="StartUrban" to="." method="_on_urban"]
+[connection signal="pressed" from="BtnDonbas" to="." method="_on_donbas"]
+[connection signal="pressed" from="BtnUrban" to="." method="_on_urban"]
+[connection signal="pressed" from="BtnAquatic" to="." method="_on_aquatic"]
+[connection signal="pressed" from="BtnTaiwan" to="." method="_on_taiwan"]
+[connection signal="pressed" from="BtnArctic" to="." method="_on_arctic"]
+[connection signal="pressed" from="BtnBorder" to="." method="_on_border"]
+[connection signal="pressed" from="BtnLAPort" to="." method="_on_laport"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit"]

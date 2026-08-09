@@ -1,1 +1,10 @@
-PlayerDrone scene
+[gd_scene format=3]
+
+[node name="PlayerDrone" type="Node3D"]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="FPVCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.15)
+fov = 100.0
