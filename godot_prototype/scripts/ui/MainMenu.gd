@@ -6,9 +6,9 @@ func _ready():
 	print("MainMenu: Ready - UI built")
 
 func _build_ui():
-	var children = get_children()
-	for c in children:
-		if c.name != "Background":
+	var kids = get_children()
+	for c in kids:
+		if str(c.name) != "Background":
 			c.queue_free()
 
 	if not has_node("Background"):
