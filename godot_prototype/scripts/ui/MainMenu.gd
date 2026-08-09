@@ -1,14 +1,12 @@
 extends Control
 
 func _ready():
-	print("MainMenu ready")
+	print("ForgeFPV MainMenu ready")
 
 func _on_donbas():
-	print("Loading Donbas")
 	get_tree().change_scene_to_file("res://scenes/maps/DonbasTest.tscn")
 
 func _on_urban():
-	print("Loading Urban")
 	get_tree().change_scene_to_file("res://scenes/maps/UrbanTest.tscn")
 
 func _on_quit():

@@ -24,38 +24,47 @@ color = Color(0.05, 0.06, 0.09, 1)
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 140.0
-offset_top = 80.0
+offset_top = 60.0
 offset_right = 1140.0
-offset_bottom = 140.0
+offset_bottom = 120.0
 theme_override_font_sizes/font_size = 32
-text = "ForgeFPV - Tactical Drone Trainer"
+text = "ForgeFPV - American Tactical Trainer"
 horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="."]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 120.0
+offset_right = 1140.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 16
+text = "Rate-mode FPV practice · Find targets · Score hits"
+horizontal_alignment = 1
 
 [node name="StartDonbas" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 280.0
+offset_top = 260.0
 offset_right = 840.0
-offset_bottom = 340.0
+offset_bottom = 320.0
 theme_override_font_sizes/font_size = 20
-text = "Start Donbas Training"
+text = "Donbas Field Training"
 
 [node name="StartUrban" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 360.0
+offset_top = 340.0
 offset_right = 840.0
-offset_bottom = 420.0
+offset_bottom = 400.0
 theme_override_font_sizes/font_size = 20
-text = "Start Urban Training"
+text = "Urban Canyon Training"
 
 [node name="QuitButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 440.0
+offset_top = 420.0
 offset_right = 840.0
-offset_bottom = 500.0
+offset_bottom = 480.0
 theme_override_font_sizes/font_size = 20
 text = "Quit"
 
