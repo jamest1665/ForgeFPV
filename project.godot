@@ -1,1 +1,49 @@
-Updated with WaterPhysicsManager autoload
+; ForgeFPV - Production Configuration
+config_version=5
+
+[application]
+
+config/name="ForgeFPV"
+config/description="American FPV Tactical Trainer - SkyForge Dynamics"
+run/main_scene="res://scenes/ui/MainMenu.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+GameState="*res://godot_prototype/scripts/core/GameState.gd"
+WindManager="*res://godot_prototype/scripts/core/WindManager.gd"
+WeatherSystem="*res://godot_prototype/scripts/core/WeatherSystem.gd"
+ObjectiveManager="*res://godot_prototype/scripts/core/ObjectiveManager.gd"
+ScoringSystem="*res://godot_prototype/scripts/core/ScoringSystem.gd"
+HighScoreManager="*res://godot_prototype/scripts/core/HighScoreManager.gd"
+DebriefSystem="*res://godot_prototype/scripts/core/DebriefSystem.gd"
+DroneDatabase="*res://godot_prototype/scripts/DroneDatabase.gd"
+MissionDatabase="*res://godot_prototype/scripts/MissionDatabase.gd"
+MissionManager="*res://godot_prototype/scripts/MissionManager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[input]
+
+throttle_up={"deadzone": 0.05, "events": []}
+throttle_down={"deadzone": 0.05, "events": []}
+roll_left={"deadzone": 0.05, "events": []}
+roll_right={"deadzone": 0.05, "events": []}
+pitch_forward={"deadzone": 0.05, "events": []}
+pitch_back={"deadzone": 0.05, "events": []}
+yaw_left={"deadzone": 0.05, "events": []}
+yaw_right={"deadzone": 0.05, "events": []}
+toggle_ew={"deadzone": 0.5, "events": []}
+toggle_help={"deadzone": 0.5, "events": []}
+pause={"deadzone": 0.5, "events": []}
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+renderer/rendering_method.mobile="forward_plus"
