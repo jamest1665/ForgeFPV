@@ -23,7 +23,7 @@ func _ready() -> void:
 	wind_mgr = WindManager.new()
 	wind_mgr.set_preset(wind_preset)
 	add_child(wind_mgr)
-	objatives = ObjectiveManager.new()
+	objectives = ObjectiveManager.new()
 	add_child(objectives)
 	objectives.objective_progress.connect(_on_progress)
 	_build_world()
@@ -34,10 +34,10 @@ func _ready() -> void:
 	print(map_name, " training ready (core systems)")
 
 func _build_world() -> void:
-	pass  # override in subclass
+	pass
 
 func _build_targets() -> void:
-	pass  # override — call objectives.spawn_targets(self, spots)
+	pass
 
 func _build_player() -> void:
 	player = Node3D.new()
@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 		var c = player.get_node("FPVCamera")
 		if c.has_method("set_speed"):
 			c.set_speed(flight.get_speed())
-	objatives.check_proximity(flight.pos)
+	objectives.check_proximity(flight.pos)
 	var prog := objectives.get_progress()
 	hud.update_stats(flight.get_speed(), flight.pos.y, flight.battery, scoring.get_score(), prog.x, prog.y, map_name)
 	if Input.is_key_pressed(KEY_ESCAPE):
