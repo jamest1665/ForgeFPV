@@ -1,4 +1,3 @@
-# MissionManager.gd — active mission runtime (autoload)
 extends Node
 
 signal mission_started(mission: Mission)
@@ -22,9 +21,10 @@ func _ready() -> void:
 	debief = DebriefSystem.new()
 	debief.name = "DebriefSystem"
 	add_child(debief)
-	# NOTE: variable intentionally named debrief below
-	debief = null
-	debief = DebriefSystem.new()
+	scenario = ScenarioManager.new()
+	scenario.name = "ScenarioManager"
+	add_child(scenario)
+	print("MissionManager ready")
 
 func get_database() -> MissionDatabase:
 	if database == null:
@@ -42,15 +42,10 @@ func start_mission(mission: Mission) -> void:
 	running = true
 	start_time = Time.get_ticks_msec() / 1000.0
 	last_summary = {}
-	if debrief == null:
-		debief = DebriefSystem.new()
-		add_child(debief)
 	if debrief:
 		debief.start_tracking()
-	if scenario == null:
-		scenario = ScenarioManager.new()
-		add_child(scenario)
-	scenario.apply_scenario(mission.scenario_id)
+	if scenario:
+		scenario.apply_scenario(mission.scenario_id)
 	if typeof(GameState) != TYPE_NIL:
 		GameState.reset_run()
 		GameState.set_map(mission.map_id)
@@ -59,7 +54,7 @@ func start_mission(mission: Mission) -> void:
 	get_tree().change_scene_to_file(mission.scene_path)
 
 func start_mission_by_id(id: String) -> void:
-	var m := get_database().get_mission(id)
+	var m = get_database().get_mission(id)
 	if m:
 		start_mission(m)
 
@@ -81,8 +76,8 @@ func abandon() -> void:
 
 func _finish(success: bool, score: int, hits: int, total: int, fail_reason: String) -> void:
 	running = false
-	var elapsed := (Time.get_ticks_msec() / 1000.0) - start_time
-	var summary := {
+	var elapsed = (Time.get_ticks_msec() / 1000.0) - start_time
+	var summary = {
 		"success": success,
 		"mission_id": active.id if active else "",
 		"title": active.title if active else "",
@@ -94,7 +89,7 @@ func _finish(success: bool, score: int, hits: int, total: int, fail_reason: Stri
 		"peak_speed": 0.0
 	}
 	if debrief:
-		var d := debrief.stop_and_summarize(score, hits, total)
+		var d = debrief.stop_and_summarize(score, hits, total)
 		summary["peak_speed"] = d.get("peak_speed", 0.0)
 	last_summary = summary
 	active = null
