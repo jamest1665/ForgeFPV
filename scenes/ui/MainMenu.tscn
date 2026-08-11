@@ -24,41 +24,49 @@ color = Color(0.05, 0.06, 0.09, 1)
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 100.0
-offset_top = 30.0
+offset_top = 20.0
 offset_right = 1180.0
-offset_bottom = 80.0
+offset_bottom = 60.0
 theme_override_font_sizes/font_size = 28
 text = "ForgeFPV - American Tactical Trainer"
 horizontal_alignment = 1
 
+[node name="BtnMissions" type="Button" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 80.0
+offset_right = 840.0
+offset_bottom = 120.0
+text = "Academy Missions"
+
 [node name="BtnDonbas" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 120.0
+offset_top = 140.0
 offset_right = 840.0
-offset_bottom = 165.0
+offset_bottom = 180.0
 text = "1  Donbas Field"
 
 [node name="BtnUrban" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 175.0
+offset_top = 190.0
 offset_right = 840.0
-offset_bottom = 220.0
+offset_bottom = 230.0
 text = "2  Urban Canyon"
 
 [node name="BtnAquatic" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 230.0
+offset_top = 240.0
 offset_right = 840.0
-offset_bottom = 275.0
+offset_bottom = 280.0
 text = "3  Aquatic Flood"
 
 [node name="BtnTaiwan" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 285.0
+offset_top = 290.0
 offset_right = 840.0
 offset_bottom = 330.0
 text = "4  Taiwan Littoral"
@@ -68,33 +76,34 @@ layout_mode = 0
 offset_left = 440.0
 offset_top = 340.0
 offset_right = 840.0
-offset_bottom = 385.0
+offset_bottom = 380.0
 text = "5  Arctic High North"
 
 [node name="BtnBorder" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 395.0
+offset_top = 390.0
 offset_right = 840.0
-offset_bottom = 440.0
+offset_bottom = 430.0
 text = "6  Southern Border"
 
 [node name="BtnLAPort" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 450.0
+offset_top = 440.0
 offset_right = 840.0
-offset_bottom = 495.0
+offset_bottom = 480.0
 text = "7  LA Megaport"
 
 [node name="QuitButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 520.0
+offset_top = 500.0
 offset_right = 840.0
-offset_bottom = 565.0
+offset_bottom = 540.0
 text = "Quit"
 
+[connection signal="pressed" from="BtnMissions" to="." method="_on_missions"]
 [connection signal="pressed" from="BtnDonbas" to="." method="_on_donbas"]
 [connection signal="pressed" from="BtnUrban" to="." method="_on_urban"]
 [connection signal="pressed" from="BtnAquatic" to="." method="_on_aquatic"]

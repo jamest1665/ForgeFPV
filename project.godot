@@ -10,6 +10,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 [autoload]
 
 GameState="*res://godot_prototype/scripts/core/GameState.gd"
+MissionManager="*res://godot_prototype/scripts/MissionManager.gd"
 
 [display]
 

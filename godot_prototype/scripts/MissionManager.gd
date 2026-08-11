@@ -20,7 +20,7 @@ func _ready() -> void:
 		database._register_defaults()
 	debief = DebriefSystem.new()
 	debief.name = "DebriefSystem"
-	add_child(debief)
+	add_child(debrief)
 	scenario = ScenarioManager.new()
 	scenario.name = "ScenarioManager"
 	add_child(scenario)

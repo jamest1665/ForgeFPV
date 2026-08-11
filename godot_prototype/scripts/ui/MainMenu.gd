@@ -1,7 +1,10 @@
 extends Control
 
 func _ready():
-	print("ForgeFPV MainMenu - 7 maps ready")
+	print("ForgeFPV MainMenu ready")
+
+func _on_missions():
+	get_tree().change_scene_to_file("res://scenes/ui/MissionSelection.tscn")
 
 func _on_donbas():
 	get_tree().change_scene_to_file("res://scenes/maps/DonbasTest.tscn")
