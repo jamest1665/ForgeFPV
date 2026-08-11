@@ -24,113 +24,122 @@ color = Color(0.05, 0.06, 0.09, 1)
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 80.0
-offset_top = 12.0
+offset_top = 8.0
 offset_right = 1200.0
-offset_bottom = 48.0
-theme_override_font_sizes/font_size = 26
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 24
 text = "ForgeFPV - American Tactical Trainer"
 horizontal_alignment = 1
 
 [node name="BtnMissions" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 60.0
+offset_top = 50.0
 offset_right = 840.0
-offset_bottom = 96.0
+offset_bottom = 82.0
 text = "Academy Missions"
 
 [node name="BtnAirframe" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 104.0
+offset_top = 90.0
 offset_right = 640.0
-offset_bottom = 136.0
+offset_bottom = 118.0
 text = "Select Airframe"
 
 [node name="BtnScenario" type="Button" parent="."]
 layout_mode = 0
 offset_left = 650.0
-offset_top = 104.0
+offset_top = 90.0
 offset_right = 840.0
-offset_bottom = 136.0
+offset_bottom = 118.0
 text = "Scenario"
 
 [node name="BtnHelp" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 144.0
+offset_top = 126.0
+offset_right = 640.0
+offset_bottom = 154.0
+text = "Pilot Brief"
+
+[node name="BtnAutonomy" type="Button" parent="."]
+layout_mode = 0
+offset_left = 650.0
+offset_top = 126.0
 offset_right = 840.0
-offset_bottom = 176.0
-text = "Pilot Brief / Instructions"
+offset_bottom = 154.0
+text = "Hivemind Demo"
 
 [node name="BtnDonbas" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 200.0
+offset_top = 180.0
 offset_right = 840.0
-offset_bottom = 236.0
+offset_bottom = 212.0
 text = "1  Donbas Field"
 
 [node name="BtnUrban" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 244.0
+offset_top = 220.0
 offset_right = 840.0
-offset_bottom = 280.0
+offset_bottom = 252.0
 text = "2  Urban Canyon"
 
 [node name="BtnAquatic" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 288.0
+offset_top = 260.0
 offset_right = 840.0
-offset_bottom = 324.0
+offset_bottom = 292.0
 text = "3  Aquatic Flood"
 
 [node name="BtnTaiwan" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 332.0
+offset_top = 300.0
 offset_right = 840.0
-offset_bottom = 368.0
+offset_bottom = 332.0
 text = "4  Taiwan Littoral"
 
 [node name="BtnArctic" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 376.0
+offset_top = 340.0
 offset_right = 840.0
-offset_bottom = 412.0
+offset_bottom = 372.0
 text = "5  Arctic High North"
 
 [node name="BtnBorder" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 420.0
+offset_top = 380.0
 offset_right = 840.0
-offset_bottom = 456.0
+offset_bottom = 412.0
 text = "6  Southern Border"
 
 [node name="BtnLAPort" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 464.0
+offset_top = 420.0
 offset_right = 840.0
-offset_bottom = 500.0
+offset_bottom = 452.0
 text = "7  LA Megaport"
 
 [node name="QuitButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 520.0
+offset_top = 470.0
 offset_right = 840.0
-offset_bottom = 556.0
+offset_bottom = 502.0
 text = "Quit"
 
 [connection signal="pressed" from="BtnMissions" to="." method="_on_missions"]
 [connection signal="pressed" from="BtnAirframe" to="." method="_on_airframe"]
 [connection signal="pressed" from="BtnScenario" to="." method="_on_scenario"]
 [connection signal="pressed" from="BtnHelp" to="." method="_on_instructions"]
+[connection signal="pressed" from="BtnAutonomy" to="." method="_on_autonomy"]
 [connection signal="pressed" from="BtnDonbas" to="." method="_on_donbas"]
 [connection signal="pressed" from="BtnUrban" to="." method="_on_urban"]
 [connection signal="pressed" from="BtnAquatic" to="." method="_on_aquatic"]

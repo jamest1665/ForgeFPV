@@ -15,6 +15,9 @@ func _on_instructions():
 func _on_scenario():
 	get_tree().change_scene_to_file("res://scenes/ui/ScenarioSelector.tscn")
 
+func _on_autonomy():
+	get_tree().change_scene_to_file("res://scenes/maps/AutonomyDemo.tscn")
+
 func _on_donbas():
 	get_tree().change_scene_to_file("res://scenes/maps/DonbasTest.tscn")
 
