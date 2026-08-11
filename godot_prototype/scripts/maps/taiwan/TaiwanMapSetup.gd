@@ -1,1 +1,0 @@
-Full production TaiwanMapSetup
