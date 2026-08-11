@@ -49,4 +49,4 @@ func _build_targets() -> void:
 		Vector3(100, 1, -20), Vector3(-90, 1, 10)
 	]
 	if objectives:
-		objatives.spawn_targets(self, spots)
+		objectives.spawn_targets(self, spots)
