@@ -17,35 +17,31 @@ func _ready() -> void:
 	database = MissionDatabase.new()
 	database.name = "MissionDatabase"
 	add_child(database)
-	database._register_defaults()
-	database.ordered_ids = database.ordered_ids  # ensure registered
-	database.missions = database.missions
-	# MissionDatabase _ready may not fire if added as child after - force register
+	# Child _ready runs after this returns; force catalog now
 	if database.missions.is_empty():
 		database._register_defaults()
-	debief_init()
+	debief = null
+	debief = DebriefSystem.new()
+	# use clear name
+	debief = null
+	debief_fix()
 	scenario = ScenarioManager.new()
 	scenario.name = "ScenarioManager"
 	add_child(scenario)
-	print("MissionManager ready")
+	print("MissionManager ready missions=", database.missions.size())
 
-func debief_init() -> void:
+func debief_fix() -> void:
 	debief = DebriefSystem.new()
 	debief.name = "DebriefSystem"
 	add_child(debief)
-
-# fix typo - use debrief not debief
-var _debrief_alias_fix: bool = false
-
-func _enter_tree() -> void:
-	pass
 
 func get_database() -> MissionDatabase:
 	if database == null:
 		database = MissionDatabase.new()
 		add_child(database)
-		if database.missions.is_empty():
-			database._register_defaults()
+		database._register_defaults()
+	elif database.missions.is_empty():
+		database._register_defaults()
 	return database
 
 func start_mission(mission: Mission) -> void:
@@ -57,8 +53,6 @@ func start_mission(mission: Mission) -> void:
 	last_summary = {}
 	if debief:
 		debief.start_tracking()
-	elif has_node("DebriefSystem"):
-		(get_node("DebriefSystem") as DebriefSystem).start_tracking()
 	if scenario:
 		scenario.apply_scenario(mission.scenario_id)
 	if typeof(GameState) != TYPE_NIL:
@@ -69,16 +63,14 @@ func start_mission(mission: Mission) -> void:
 	get_tree().change_scene_to_file(mission.scene_path)
 
 func start_mission_by_id(id: String) -> void:
-	var db := get_database()
-	var m := db.get_mission(id)
+	var m := get_database().get_mission(id)
 	if m:
 		start_mission(m)
 
 func update_telemetry(t: Dictionary) -> void:
-	if not running:
+	if not running or debief == null:
 		return
-	if debief:
-		debief.update_from_telemetry(t)
+	debief.update_from_telemetry(t)
 
 func notify_targets_cleared(score: int, hits: int, total: int) -> void:
 	if not running or active == null:
@@ -91,8 +83,6 @@ func notify_time_expired(score: int, hits: int, total: int) -> void:
 	_finish(false, score, hits, total, "Time expired")
 
 func abandon() -> void:
-	if not running:
-		return
 	running = false
 	active = null
 
@@ -107,19 +97,18 @@ func _finish(success: bool, score: int, hits: int, total: int, fail_reason: Stri
 		"hits": hits,
 		"total_targets": total,
 		"time_sec": elapsed,
-		"fail_reason": fail_reason
+		"fail_reason": fail_reason,
+		"peak_speed": 0.0
 	}
 	if debief:
 		var d := debief.stop_and_summarize(score, hits, total)
 		summary["peak_speed"] = d.get("peak_speed", 0.0)
 	last_summary = summary
-	var mid := active.id if active else ""
 	active = null
 	if success:
 		mission_completed.emit(summary)
 	else:
 		mission_failed.emit(fail_reason)
-	# Store for complete screen
 	if typeof(GameState) != TYPE_NIL:
 		GameState.score = score
 	print("Mission finished success=", success, " score=", score)
