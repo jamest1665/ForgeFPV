@@ -6,6 +6,15 @@ func _ready():
 func _on_missions():
 	get_tree().change_scene_to_file("res://scenes/ui/MissionSelection.tscn")
 
+func _on_airframe():
+	get_tree().change_scene_to_file("res://scenes/ui/DroneSelection.tscn")
+
+func _on_instructions():
+	get_tree().change_scene_to_file("res://scenes/ui/Instructions.tscn")
+
+func _on_scenario():
+	get_tree().change_scene_to_file("res://scenes/ui/ScenarioSelector.tscn")
+
 func _on_donbas():
 	get_tree().change_scene_to_file("res://scenes/maps/DonbasTest.tscn")
 
