@@ -1,7 +1,5 @@
 # WeatherSystem.gd
 # ForgeFPV — weather presets that drive wind bias, fog, and ambient feel
-# Integrates with WindManager when present on the same parent/scene
-
 extends Node
 class_name WeatherSystem
 
@@ -15,7 +13,7 @@ var _time: float = 0.0
 var _wind_bias: Vector3 = Vector3.ZERO
 var _turbulence_scale: float = 1.0
 var _fog_density: float = 0.0
-var _visibility: float = 1.0  # 1 = clear, 0 = near zero
+var _visibility: float = 1.0
 var _precip: float = 0.0
 var env_node: WorldEnvironment
 var env: Environment
@@ -28,14 +26,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_time += delta
 	if apply_environment and env and fog_enabled:
-		# gentle flicker for fog in storm
 		var flicker := 1.0 + sin(_time * 0.7) * 0.05 * _precip
 		env.fog_density = _fog_density * flicker
 
 func _ensure_environment() -> void:
 	if not apply_environment:
 		return
-	# Prefer existing WorldEnvironment in tree
 	var existing := get_tree().current_scene.find_child("WorldEnvironment", true, false) if get_tree().current_scene else null
 	if existing and existing is WorldEnvironment:
 		env_node = existing
@@ -106,6 +102,13 @@ func set_preset(name: String) -> void:
 			_visibility = 0.4
 			_precip = 1.0
 			_set_sky(Color(0.22, 0.24, 0.28), 0.3)
+		"typhoon":
+			_wind_bias = Vector3(14.0, 1.2, 9.0)
+			_turbulence_scale = 3.2
+			_fog_density = 0.014
+			_visibility = 0.22
+			_precip = 1.0
+			_set_sky(Color(0.12, 0.14, 0.18), 0.22)
 		"arctic":
 			_wind_bias = Vector3(6.0, 0, 4.0)
 			_turbulence_scale = 1.6
@@ -143,29 +146,27 @@ func _set_sky(bg: Color, ambient_energy: float) -> void:
 	env.fog_light_color = bg.lightened(0.1)
 
 func _sync_wind_manager() -> void:
-	# If a WindManager sibling/child exists, push bias
 	var wm := _find_wind_manager()
 	if wm == null:
 		return
-	if wm.has_method("set_preset") == false:
-		# direct property push
+	if current_preset == "typhoon":
 		if "base_wind" in wm:
 			wm.base_wind = _wind_bias
 		if "turbulence" in wm:
-			wm.turbulence = 0.6 * _turbulence_scale
+			wm.turbulence = 2.8
 		return
-	# map weather to nearest wind preset name when useful
-	match current_preset:
-		"clear":
-			wm.set_preset("calm")
-		"urban", "overcast":
-			wm.set_preset("urban")
-		"arctic", "snow":
-			wm.set_preset("arctic")
-		"coastal", "rain", "storm":
-			wm.set_preset("coastal")
-		_:
-			wm.set_preset("field")
+	if wm.has_method("set_preset"):
+		match current_preset:
+			"clear":
+				wm.set_preset("calm")
+			"urban", "overcast":
+				wm.set_preset("urban")
+			"arctic", "snow":
+				wm.set_preset("arctic")
+			"coastal", "rain", "storm":
+				wm.set_preset("coastal")
+			_:
+				wm.set_preset("field")
 	if "base_wind" in wm:
 		wm.base_wind = _wind_bias
 	if "turbulence" in wm:
@@ -197,4 +198,4 @@ func get_fog_density() -> float:
 	return _fog_density
 
 func list_presets() -> Array:
-	return ["clear", "overcast", "fog", "rain", "snow", "storm", "arctic", "coastal"]
+	return ["clear", "overcast", "fog", "rain", "snow", "storm", "typhoon", "arctic", "coastal"]
