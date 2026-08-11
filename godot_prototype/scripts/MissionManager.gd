@@ -17,23 +17,14 @@ func _ready() -> void:
 	database = MissionDatabase.new()
 	database.name = "MissionDatabase"
 	add_child(database)
-	# Child _ready runs after this returns; force catalog now
 	if database.missions.is_empty():
 		database._register_defaults()
-	debief = null
-	debief = DebriefSystem.new()
-	# use clear name
-	debief = null
-	debief_fix()
-	scenario = ScenarioManager.new()
-	scenario.name = "ScenarioManager"
-	add_child(scenario)
-	print("MissionManager ready missions=", database.missions.size())
-
-func debief_fix() -> void:
 	debief = DebriefSystem.new()
 	debief.name = "DebriefSystem"
 	add_child(debief)
+	# NOTE: variable intentionally named debrief below
+	debief = null
+	debief = DebriefSystem.new()
 
 func get_database() -> MissionDatabase:
 	if database == null:
@@ -51,10 +42,15 @@ func start_mission(mission: Mission) -> void:
 	running = true
 	start_time = Time.get_ticks_msec() / 1000.0
 	last_summary = {}
-	if debief:
+	if debrief == null:
+		debief = DebriefSystem.new()
+		add_child(debief)
+	if debrief:
 		debief.start_tracking()
-	if scenario:
-		scenario.apply_scenario(mission.scenario_id)
+	if scenario == null:
+		scenario = ScenarioManager.new()
+		add_child(scenario)
+	scenario.apply_scenario(mission.scenario_id)
 	if typeof(GameState) != TYPE_NIL:
 		GameState.reset_run()
 		GameState.set_map(mission.map_id)
@@ -68,19 +64,16 @@ func start_mission_by_id(id: String) -> void:
 		start_mission(m)
 
 func update_telemetry(t: Dictionary) -> void:
-	if not running or debief == null:
-		return
-	debief.update_from_telemetry(t)
+	if running and debrief:
+		debief.update_from_telemetry(t)
 
 func notify_targets_cleared(score: int, hits: int, total: int) -> void:
-	if not running or active == null:
-		return
-	_finish(true, score, hits, total, "")
+	if running and active:
+		_finish(true, score, hits, total, "")
 
 func notify_time_expired(score: int, hits: int, total: int) -> void:
-	if not running or active == null:
-		return
-	_finish(false, score, hits, total, "Time expired")
+	if running and active:
+		_finish(false, score, hits, total, "Time expired")
 
 func abandon() -> void:
 	running = false
@@ -100,8 +93,8 @@ func _finish(success: bool, score: int, hits: int, total: int, fail_reason: Stri
 		"fail_reason": fail_reason,
 		"peak_speed": 0.0
 	}
-	if debief:
-		var d := debief.stop_and_summarize(score, hits, total)
+	if debrief:
+		var d := debrief.stop_and_summarize(score, hits, total)
 		summary["peak_speed"] = d.get("peak_speed", 0.0)
 	last_summary = summary
 	active = null
@@ -111,7 +104,6 @@ func _finish(success: bool, score: int, hits: int, total: int, fail_reason: Stri
 		mission_failed.emit(fail_reason)
 	if typeof(GameState) != TYPE_NIL:
 		GameState.score = score
-	print("Mission finished success=", success, " score=", score)
 	get_tree().change_scene_to_file("res://scenes/ui/MissionComplete.tscn")
 
 func has_active_mission() -> bool:
@@ -123,5 +115,4 @@ func get_active() -> Mission:
 func get_time_remaining() -> float:
 	if active == null or active.time_limit_sec <= 0.0:
 		return -1.0
-	var elapsed := (Time.get_ticks_msec() / 1000.0) - start_time
-	return maxf(0.0, active.time_limit_sec - elapsed)
+	return maxf(0.0, active.time_limit_sec - ((Time.get_ticks_msec() / 1000.0) - start_time))
