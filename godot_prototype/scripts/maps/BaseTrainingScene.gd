@@ -1,5 +1,5 @@
 # BaseTrainingScene.gd
-# Shared training map base — flight, targets, HUD, wind, weather, audio, particles
+# Shared training map base — flight, targets, HUD, wind, weather, audio, particles, pause
 extends Node3D
 class_name BaseTrainingScene
 
@@ -21,11 +21,19 @@ var objectives: ObjectiveManager
 var audio: AudioManager
 var weather: WeatherSystem
 var wind_fx: WindParticleSystem
+var pause_menu: PauseMenu
 var ew_active: bool = false
+var _paused: bool = false
+var _scene_path: String = ""
 
 func _ready() -> void:
+	_scene_path = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
 	flight = FlightModel.new()
 	flight.reset(Vector3(0, spawn_height, 0))
+
+	if typeof(GameState) != TYPE_NIL and GameState.has_method("reset_run"):
+		GameState.reset_run()
+		GameState.set_map(map_name.to_lower())
 
 	scoring = ScoringSystem.new()
 	scoring.name = "ScoringSystem"
@@ -68,7 +76,15 @@ func _ready() -> void:
 	hud = TrainingHUD.new()
 	hud.name = "TrainingHUD"
 	add_child(hud)
-	print(map_name, " training ready (flight+wind+weather+audio+particles)")
+
+	pause_menu = PauseMenu.new()
+	pause_menu.name = "PauseMenu"
+	add_child(pause_menu)
+	pause_menu.resume_pressed.connect(_on_resume)
+	pause_menu.restart_pressed.connect(_on_restart)
+	pause_menu.main_menu_pressed.connect(_on_main_menu)
+
+	print(map_name, " training ready (Phase A core path)")
 
 func _build_world() -> void:
 	pass
@@ -102,11 +118,24 @@ func _apply_particle_look() -> void:
 			pass
 
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel") or (Input.is_key_pressed(KEY_ESCAPE) and not _paused):
+		# edge detect escape via ui_cancel preferred; fallback handled in _unhandled
+		pass
+
+	if _paused:
+		return
 	if flight == null or player == null:
 		return
 
-	if Input.is_physical_key_pressed(KEY_J):
-		ew_active = not ew_active
+	if Input.is_physical_key_pressed(KEY_J) and not Input.is_physical_key_pressed(KEY_SHIFT):
+		# edge-ish: only toggle when just became pressed — use frame flag
+		if not has_meta("_j_held"):
+			set_meta("_j_held", false)
+		if not get_meta("_j_held"):
+			ew_active = not ew_active
+			set_meta("_j_held", true)
+	else:
+		set_meta("_j_held", false)
 
 	var wind_vec := Vector3.ZERO
 	if wind_mgr:
@@ -137,6 +166,10 @@ func _process(delta: float) -> void:
 	if hud:
 		hud.update_stats(flight.get_speed(), flight.pos.y, flight.battery, score_val, prog.x, prog.y, map_name)
 
+	if typeof(GameState) != TYPE_NIL and GameState.has_method("update_telemetry"):
+		GameState.update_telemetry(flight.get_telemetry())
+		GameState.score = score_val
+
 	if audio:
 		audio.update_from_telemetry({
 			"throttle": flight.throttle,
@@ -146,9 +179,47 @@ func _process(delta: float) -> void:
 			"wind_strength": wind_vec.length()
 		})
 
-	if Input.is_key_pressed(KEY_ESCAPE):
-		get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE:
+			if _paused:
+				_on_resume()
+			else:
+				_pause()
+			get_viewport().set_input_as_handled()
 
-func _on_progress(hit: int, _total: int) -> void:
+func _pause() -> void:
+	_paused = true
+	get_tree().paused = true
+	if pause_menu:
+		pause_menu.show_pause()
+
+func _on_resume() -> void:
+	_paused = false
+	get_tree().paused = false
+	if pause_menu:
+		pause_menu.hide_pause()
+
+func _on_restart() -> void:
+	get_tree().paused = false
+	_paused = false
+	var path := _scene_path
+	if path == "" or path == null:
+		path = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
+	if path != "":
+		get_tree().change_scene_to_file(path)
+
+func _on_main_menu() -> void:
+	get_tree().paused = false
+	_paused = false
+	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
+
+func _on_progress(hit: int, total: int) -> void:
 	if scoring:
 		scoring.add_hit(hit, 100)
+	if typeof(GameState) != TYPE_NIL:
+		if GameState.has_method("add_score"):
+			GameState.add_score(100)
+		if GameState.has_method("register_hit"):
+			GameState.register_hit()
+		GameState.objectives_total = total
