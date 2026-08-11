@@ -1,5 +1,5 @@
 # BaseTrainingScene.gd
-# Shared training map base — flight, targets, HUD, wind, weather, audio, particles, pause, missions
+# Shared training map base — flight, drone config, HUD, wind, weather, audio, particles, pause, missions, help, trail
 extends Node3D
 class_name BaseTrainingScene
 
@@ -11,6 +11,7 @@ class_name BaseTrainingScene
 @export var enable_audio: bool = true
 @export var enable_weather: bool = true
 @export var enable_wind_particles: bool = true
+@export var enable_path_trail: bool = true
 
 var flight: FlightModel
 var player: Node3D
@@ -22,6 +23,9 @@ var audio: AudioManager
 var weather: WeatherSystem
 var wind_fx: WindParticleSystem
 var pause_menu: PauseMenu
+var help_overlay: HelpOverlay
+var path_trail: PathTrail
+var drone_db: DroneDatabase
 var ew_active: bool = false
 var _paused: bool = false
 var _scene_path: String = ""
@@ -32,6 +36,7 @@ func _ready() -> void:
 	_scene_path = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
 	flight = FlightModel.new()
 	flight.reset(Vector3(0, spawn_height, 0))
+	_apply_selected_drone()
 
 	if typeof(GameState) != TYPE_NIL and GameState.has_method("reset_run"):
 		if typeof(MissionManager) == TYPE_NIL or not MissionManager.has_active_mission():
@@ -77,6 +82,12 @@ func _ready() -> void:
 			wind_fx.set_player(player)
 		_apply_particle_look()
 
+	if enable_path_trail and player:
+		path_trail = PathTrail.new()
+		path_trail.name = "PathTrail"
+		add_child(path_trail)
+		path_trail.set_follow(player)
+
 	hud = TrainingHUD.new()
 	hud.name = "TrainingHUD"
 	add_child(hud)
@@ -88,7 +99,23 @@ func _ready() -> void:
 	pause_menu.restart_pressed.connect(_on_restart)
 	pause_menu.main_menu_pressed.connect(_on_main_menu)
 
-	print(map_name, " training ready (Phase B mission-aware)")
+	help_overlay = HelpOverlay.new()
+	help_overlay.name = "HelpOverlay"
+	add_child(help_overlay)
+
+	print(map_name, " training ready (Phase C)")
+
+func _apply_selected_drone() -> void:
+	drone_db = DroneDatabase.new()
+	drone_db._register_defaults()
+	var id := "trainer_5inch"
+	if typeof(GameState) != TYPE_NIL:
+		id = GameState.selected_drone
+	var cfg: DroneConfig = drone_db.get_drone(id)
+	if cfg:
+		cfg.apply_to_flight_model(flight)
+		body_color = cfg.body_color
+		print("Applied airframe: ", cfg.display_name)
 
 func _build_world() -> void:
 	pass
@@ -193,6 +220,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				_on_resume()
 			else:
 				_pause()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_H:
+			if help_overlay:
+				help_overlay.toggle()
 			get_viewport().set_input_as_handled()
 
 func _pause() -> void:
