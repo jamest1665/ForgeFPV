@@ -1,1 +1,0 @@
-Full Donbas test scene setup documentation
