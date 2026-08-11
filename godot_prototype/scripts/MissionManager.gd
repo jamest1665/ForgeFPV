@@ -7,7 +7,7 @@ signal mission_failed(reason: String)
 var database: MissionDatabase
 var active: Mission = null
 var running: bool = false
-var debrief: DebriefSystem
+var tracker: DebriefSystem
 var scenario: ScenarioManager
 var start_time: float = 0.0
 var last_summary: Dictionary = {}
@@ -18,9 +18,9 @@ func _ready() -> void:
 	add_child(database)
 	if database.missions.is_empty():
 		database._register_defaults()
-	debief = DebriefSystem.new()
-	debief.name = "DebriefSystem"
-	add_child(debrief)
+	tracker = DebriefSystem.new()
+	tracker.name = "DebriefSystem"
+	add_child(tracker)
 	scenario = ScenarioManager.new()
 	scenario.name = "ScenarioManager"
 	add_child(scenario)
@@ -42,8 +42,8 @@ func start_mission(mission: Mission) -> void:
 	running = true
 	start_time = Time.get_ticks_msec() / 1000.0
 	last_summary = {}
-	if debrief:
-		debief.start_tracking()
+	if tracker:
+		tracker.start_tracking()
 	if scenario:
 		scenario.apply_scenario(mission.scenario_id)
 	if typeof(GameState) != TYPE_NIL:
@@ -59,8 +59,8 @@ func start_mission_by_id(id: String) -> void:
 		start_mission(m)
 
 func update_telemetry(t: Dictionary) -> void:
-	if running and debrief:
-		debief.update_from_telemetry(t)
+	if running and tracker:
+		tracker.update_from_telemetry(t)
 
 func notify_targets_cleared(score: int, hits: int, total: int) -> void:
 	if running and active:
@@ -88,8 +88,8 @@ func _finish(success: bool, score: int, hits: int, total: int, fail_reason: Stri
 		"fail_reason": fail_reason,
 		"peak_speed": 0.0
 	}
-	if debrief:
-		var d = debrief.stop_and_summarize(score, hits, total)
+	if tracker:
+		var d = tracker.stop_and_summarize(score, hits, total)
 		summary["peak_speed"] = d.get("peak_speed", 0.0)
 	last_summary = summary
 	active = null

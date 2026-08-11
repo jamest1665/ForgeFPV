@@ -37,10 +37,10 @@ func _build_ui() -> void:
 	]
 	add_child(body)
 
-	var debrief_panel := DebriefPanel.new()
-	debief_panel.position = Vector2(200, 360)
-	add_child(debrief_panel)
-	debief_panel.show_summary(summary)
+	var panel := DebriefPanel.new()
+	panel.position = Vector2(200, 360)
+	add_child(panel)
+	panel.show_summary(summary)
 
 	var btn_again := Button.new()
 	btn_again.text = "Missions"
