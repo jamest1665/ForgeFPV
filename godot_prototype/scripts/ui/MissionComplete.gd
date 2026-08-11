@@ -1,4 +1,3 @@
-# MissionComplete.gd — end-of-mission results
 extends Control
 
 func _ready() -> void:
@@ -25,7 +24,7 @@ func _build_ui() -> void:
 
 	var body := Label.new()
 	body.position = Vector2(200, 120)
-	body.size = Vector2(880, 320)
+	body.size = Vector2(880, 200)
 	body.add_theme_font_size_override("font_size", 20)
 	body.text = "%s\n\nScore: %d\nTargets: %d / %d\nTime: %.1fs\nPeak speed: %.1f m/s\n%s" % [
 		str(summary.get("title", "")),
@@ -38,7 +37,6 @@ func _build_ui() -> void:
 	]
 	add_child(body)
 
-	# Debrief panel child
 	var debrief_panel := DebriefPanel.new()
 	debief_panel.position = Vector2(200, 360)
 	add_child(debrief_panel)
