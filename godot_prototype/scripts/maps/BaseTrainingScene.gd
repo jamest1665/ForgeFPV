@@ -1,5 +1,5 @@
 # BaseTrainingScene.gd
-# Shared training map base — flight, targets, HUD, wind, weather, audio, particles, pause
+# Shared training map base — flight, targets, HUD, wind, weather, audio, particles, pause, missions
 extends Node3D
 class_name BaseTrainingScene
 
@@ -25,6 +25,7 @@ var pause_menu: PauseMenu
 var ew_active: bool = false
 var _paused: bool = false
 var _scene_path: String = ""
+var _mission_finished: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -33,7 +34,8 @@ func _ready() -> void:
 	flight.reset(Vector3(0, spawn_height, 0))
 
 	if typeof(GameState) != TYPE_NIL and GameState.has_method("reset_run"):
-		GameState.reset_run()
+		if typeof(MissionManager) == TYPE_NIL or not MissionManager.has_active_mission():
+			GameState.reset_run()
 		GameState.set_map(map_name.to_lower())
 
 	scoring = ScoringSystem.new()
@@ -49,6 +51,7 @@ func _ready() -> void:
 	objectives.name = "ObjectiveManager"
 	add_child(objectives)
 	objectives.objective_progress.connect(_on_progress)
+	objectives.all_complete.connect(_on_all_complete)
 
 	if enable_weather:
 		weather = WeatherSystem.new()
@@ -85,7 +88,7 @@ func _ready() -> void:
 	pause_menu.restart_pressed.connect(_on_restart)
 	pause_menu.main_menu_pressed.connect(_on_main_menu)
 
-	print(map_name, " training ready (Phase A core path)")
+	print(map_name, " training ready (Phase B mission-aware)")
 
 func _build_world() -> void:
 	pass
@@ -119,7 +122,7 @@ func _apply_particle_look() -> void:
 			pass
 
 func _process(delta: float) -> void:
-	if _paused:
+	if _paused or _mission_finished:
 		return
 	if flight == null or player == null:
 		return
@@ -162,9 +165,17 @@ func _process(delta: float) -> void:
 	if hud:
 		hud.update_stats(flight.get_speed(), flight.pos.y, flight.battery, score_val, prog.x, prog.y, map_name)
 
+	var telem := flight.get_telemetry()
 	if typeof(GameState) != TYPE_NIL and GameState.has_method("update_telemetry"):
-		GameState.update_telemetry(flight.get_telemetry())
+		GameState.update_telemetry(telem)
 		GameState.score = score_val
+	if typeof(MissionManager) != TYPE_NIL and MissionManager.has_active_mission():
+		MissionManager.update_telemetry(telem)
+		var remain: float = MissionManager.get_time_remaining()
+		if remain == 0.0:
+			_mission_finished = true
+			MissionManager.notify_time_expired(score_val, prog.x, prog.y)
+			return
 
 	if audio:
 		audio.update_from_telemetry({
@@ -209,6 +220,8 @@ func _on_restart() -> void:
 func _on_main_menu() -> void:
 	get_tree().paused = false
 	_paused = false
+	if typeof(MissionManager) != TYPE_NIL:
+		MissionManager.abandon()
 	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
 
 func _on_progress(hit: int, total: int) -> void:
@@ -220,3 +233,12 @@ func _on_progress(hit: int, total: int) -> void:
 		if GameState.has_method("register_hit"):
 			GameState.register_hit()
 		GameState.objectives_total = total
+
+func _on_all_complete(_score_hint: int) -> void:
+	if _mission_finished:
+		return
+	if typeof(MissionManager) != TYPE_NIL and MissionManager.has_active_mission():
+		_mission_finished = true
+		var prog := objectives.get_progress() if objectives else Vector2i(0, 0)
+		var score_val := scoring.get_score() if scoring else 0
+		MissionManager.notify_targets_cleared(score_val, prog.x, prog.y)
