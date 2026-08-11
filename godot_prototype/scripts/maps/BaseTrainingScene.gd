@@ -27,6 +27,7 @@ var _paused: bool = false
 var _scene_path: String = ""
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	_scene_path = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
 	flight = FlightModel.new()
 	flight.reset(Vector3(0, spawn_height, 0))
@@ -118,17 +119,12 @@ func _apply_particle_look() -> void:
 			pass
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel") or (Input.is_key_pressed(KEY_ESCAPE) and not _paused):
-		# edge detect escape via ui_cancel preferred; fallback handled in _unhandled
-		pass
-
 	if _paused:
 		return
 	if flight == null or player == null:
 		return
 
-	if Input.is_physical_key_pressed(KEY_J) and not Input.is_physical_key_pressed(KEY_SHIFT):
-		# edge-ish: only toggle when just became pressed — use frame flag
+	if Input.is_physical_key_pressed(KEY_J):
 		if not has_meta("_j_held"):
 			set_meta("_j_held", false)
 		if not get_meta("_j_held"):
@@ -204,8 +200,9 @@ func _on_restart() -> void:
 	get_tree().paused = false
 	_paused = false
 	var path := _scene_path
-	if path == "" or path == null:
-		path = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
+	if path == "":
+		if get_tree().current_scene:
+			path = get_tree().current_scene.scene_file_path
 	if path != "":
 		get_tree().change_scene_to_file(path)
 
