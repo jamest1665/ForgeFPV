@@ -105,7 +105,6 @@ func _process(delta: float) -> void:
 	if flight == null or player == null:
 		return
 
-	# Toggle EW with J (optional training stressor)
 	if Input.is_physical_key_pressed(KEY_J):
 		ew_active = not ew_active
 
@@ -127,7 +126,7 @@ func _process(delta: float) -> void:
 			c.apply_ew_jitter(0.6)
 
 	if objectives:
-		objatives.check_proximity(flight.pos)
+		objectives.check_proximity(flight.pos)
 
 	var prog := Vector2i(0, 0)
 	if objectives:
