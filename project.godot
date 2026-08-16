@@ -4,6 +4,7 @@ config_version=5
 
 config/name="ForgeFPV"
 config/description="American FPV Tactical Trainer"
+config/version="0.2.0"
 run/main_scene="res://scenes/ui/MainMenu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
@@ -11,6 +12,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 
 GameState="*res://godot_prototype/scripts/core/GameState.gd"
 MissionManager="*res://godot_prototype/scripts/MissionManager.gd"
+PilotSettings="*res://godot_prototype/scripts/core/PilotSettings.gd"
 
 [display]
 
