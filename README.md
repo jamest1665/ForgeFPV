@@ -1,6 +1,7 @@
 # ForgeFPV
 
-**American FPV Tactical Drone Trainer** — SkyForge Dynamics
+**American FPV Tactical Drone Trainer** — SkyForge Dynamics  
+**Version:** 0.2.0 (Phase 0+1)
 
 Rate-mode FPV training across multiple theaters, Academy missions, aquatic low-alt practice, and an optional hivemind swarm demo. Built in **Godot 4**.
 
@@ -12,33 +13,38 @@ Rate-mode FPV training across multiple theaters, Academy missions, aquatic low-a
 2. Download ZIP from this repo → extract
 3. Godot → **Import** → select `project.godot` → **F5**
 
-Standalone Windows/Linux builds: see [docs/RELEASE_BUILD.md](docs/RELEASE_BUILD.md).
+Standalone builds: [docs/RELEASE_BUILD.md](docs/RELEASE_BUILD.md).
 
 ---
 
 ## Controls
 
-| Action | Key |
-|--------|-----|
-| Pitch / Roll | W A S D |
-| Yaw | Q / E |
-| Throttle | Space / Ctrl |
-| Pause | Esc |
-| Help (in map) | H |
-| EW toggle (training stressor) | J |
+| Action | Keyboard | Gamepad / RC (joy 0) |
+|--------|----------|----------------------|
+| Pitch / Roll | W A S D | Left stick |
+| Yaw | Q / E | Right stick X |
+| Throttle | Space / Ctrl | Right stick Y or triggers |
+| Pause | Esc | — |
+| Help | H | — |
+| EW stress | J | — |
 
-Fly into **red targets** to score.
+Tune rates, expo, invert, FOV under **Pilot Settings**. Fly into **red targets** to score.
+
+**Showcase map:** Donbas Field (Phase 1 art pass).
 
 ---
 
-## Features
+## Hardware (honest guidance)
 
-- **7 free-play maps** — Donbas, Urban, Aquatic, Taiwan, Arctic, Border, LA Port
-- **Academy Missions** — brief → fly → complete
-- **Airframe select** — profiles applied on land training maps
-- **Shared land core** — wind, weather, audio hooks, pause, scoring
-- **Aquatic path** — buoyancy / current low-alt training
-- **Hivemind Demo** — multi-team swarm (seek / ring / hold)
+| | Minimum | Comfortable |
+|--|---------|-------------|
+| OS | Windows 10 64-bit / modern Linux | Windows 11 |
+| CPU | 4-core (e.g. i5-7400 / Ryzen 5 1600) | 6-core or better |
+| RAM | 8 GB | 16 GB |
+| GPU | OpenGL 3.3 / Vulkan capable, 2 GB VRAM | GTX 1060 / RX 5600 class or better |
+| Storage | ~500 MB source project | + space for exports |
+
+Gamepad or FPV radio (mapped as a game controller) strongly recommended for training value.
 
 ---
 
@@ -46,41 +52,18 @@ Fly into **red targets** to score.
 
 | Doc | Purpose |
 |-----|---------|
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | **Living architecture** — layers, systems, extension patterns |
-| [docs/CHANGE_POLICY.md](docs/CHANGE_POLICY.md) | What may change without approval |
-| [docs/PRODUCT_ROADMAP.md](docs/PRODUCT_ROADMAP.md) | Sellable product gaps & priorities |
-| [docs/DIRECTORY_MAP.md](docs/DIRECTORY_MAP.md) | Folder ownership |
-| [docs/RELEASE_BUILD.md](docs/RELEASE_BUILD.md) | Export & release packaging |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute safely |
-
----
-
-## Project layout (short)
-
-```
-project.godot
-scenes/ui/          → menus & mission UI
-scenes/maps/        → runnable map entry points
-godot_prototype/scripts/
-  core/             → flight, wind, weather, scoring
-  maps/             → BaseTrainingScene + theaters
-  aquatic/          → water training
-  swarm/            → hivemind
-  ui/               → UI controllers
-tools/              → offline Python utilities
-docs/               → architecture & product docs
-```
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Living architecture |
+| [docs/CHANGE_POLICY.md](docs/CHANGE_POLICY.md) | Frozen vs open changes |
+| [docs/UFDS_COMPETITIVE_ROADMAP.md](docs/UFDS_COMPETITIVE_ROADMAP.md) | Equal/better vs UFDS plan |
+| [docs/PRODUCT_ROADMAP.md](docs/PRODUCT_ROADMAP.md) | Product gaps |
+| [docs/SMOKE_TEST.md](docs/SMOKE_TEST.md) | Pre-release checklist |
+| [docs/RELEASE_BUILD.md](docs/RELEASE_BUILD.md) | Export packaging |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
 
 ---
 
 ## Development policy
 
-**Flight, control, and gameplay behavior are frozen** unless the product owner approves a change. Documentation, structure, and non-breaking production hardening are welcome.
-
----
-
-## License / commercial use
-
-Copyright © SkyForge Dynamics. All rights reserved unless a separate license file states otherwise. Contact the repository owner for distribution or commercial licensing.
+**Flight `step()` dynamics stay frozen** unless approved. Phase 1 only extended **input** (sticks + settings shaping) and **presentation**.
 
 **Repo:** https://github.com/jamest1665/ForgeFPV
